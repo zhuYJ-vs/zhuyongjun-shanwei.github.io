@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
+    <title>广州→汕尾·3天2晚看海日落之旅</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #fef9ef;
+            font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", sans-serif;
+            color: #2c3e2f;
+            padding: 16px 12px 48px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* 卡片风格：手绘+柔和阴影 */
+        .card {
+            background: #fffffffa;
+            border-radius: 36px;
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.05), 0 2px 6px rgba(0, 0, 0, 0.02);
+            margin-bottom: 24px;
+            overflow: hidden;
+            border: 1px solid #f0e4cf;
+            transition: all 0.2s;
+        }
+
+        .card-header {
+            padding: 18px 20px 10px 20px;
+            background: #fffaf2;
+            border-bottom: 2px dashed #f5d9b0;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .day-badge {
+            background: #e0854b;
+            color: white;
+            border-radius: 60px;
+            padding: 6px 18px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            letter-spacing: 0.5px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .day-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #b45f2b;
+        }
+
+        .sub {
+            color: #a68a6c;
+            font-size: 0.75rem;
+            background: #fef0e2;
+            padding: 4px 12px;
+            border-radius: 40px;
+            margin-left: auto;
+        }
+
+        .card-content {
+            padding: 16px 20px 24px;
+        }
+
+        /* 时间线组件 */
+        .timeline-item {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 18px;
+            align-items: flex-start;
+        }
+        .time-icon {
+            min-width: 70px;
+            background: #fdefd9;
+            border-radius: 40px;
+            text-align: center;
+            padding: 6px 0;
+            font-weight: 600;
+            font-size: 0.7rem;
+            color: #c1662c;
+        }
+        .timeline-desc {
+            flex: 1;
+            background: #fffcf5;
+            padding: 8px 14px;
+            border-radius: 24px;
+            font-size: 0.87rem;
+            line-height: 1.4;
+            border: 1px solid #f7e6d4;
+        }
+
+        .highlight-tip {
+            background: #fff1e0;
+            border-left: 5px solid #e0854b;
+            padding: 12px 16px;
+            border-radius: 24px;
+            margin: 14px 0;
+            font-size: 0.8rem;
+        }
+
+        .spot-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin: 18px 0 12px;
+        }
+        .spot-card {
+            flex: 1;
+            min-width: 110px;
+            background: #fffbf5;
+            border-radius: 28px;
+            padding: 10px 6px;
+            text-align: center;
+            border: 1px solid #f2e0cc;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+        }
+        .spot-emoji {
+            font-size: 2rem;
+            margin-bottom: 6px;
+        }
+        .spot-name {
+            font-weight: 600;
+            font-size: 0.85rem;
+        }
+        .spot-tip {
+            font-size: 0.7rem;
+            color: #a07a58;
+            margin-top: 5px;
+        }
+
+        .food-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 16px 0 12px;
+        }
+        .food-item {
+            background: #feeedb;
+            border-radius: 60px;
+            padding: 6px 15px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            border: 0.5px solid #fadcb9;
+        }
+
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 1px dashed #eedfcb;
+            padding: 10px 0;
+            font-size: 0.85rem;
+        }
+
+        .img-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin: 18px 0 12px;
+            justify-content: center;
+        }
+        .img-card {
+            flex: 1;
+            min-width: 130px;
+            background: #f9f0e6;
+            border-radius: 28px;
+            padding: 12px 8px;
+            text-align: center;
+            transition: all 0.2s;
+        }
+        .img-placeholder {
+            background: #e7dbcd;
+            border-radius: 24px;
+            height: 110px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: #a07a58;
+            margin-bottom: 8px;
+        }
+        .mock-img {
+            background: #e4d5c4;
+            border-radius: 24px;
+            padding: 20px 0;
+            text-align: center;
+            font-size: 0.8rem;
+            color: #6d4c2e;
+        }
+
+        .badge-icon {
+            background: #e0854b20;
+            border-radius: 30px;
+            padding: 4px 12px;
+            font-size: 0.7rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        hr {
+            margin: 16px 0;
+            border: 0;
+            height: 2px;
+            background: linear-gradient(to right, #f5dec5, transparent);
+        }
+
+        footer {
+            text-align: center;
+            font-size: 0.7rem;
+            color: #b18b6b;
+            margin-top: 24px;
+        }
+        .sunset-box {
+            background: #feede0;
+            border-radius: 32px;
+            padding: 16px;
+            text-align: center;
+            margin: 12px 0;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+
+    <!-- 封面卡片 -->
+    <div class="card" style="background: #fff5e8;">
+        <div class="card-content" style="text-align: center;">
+            <div style="font-size: 3.5rem;">🌊🍤</div>
+            <h1 style="font-size: 1.9rem; margin: 8px 0;">广州 · 汕尾漫游记</h1>
+            <p style="color: #b87a46;">特种兵广州 + 躺平看海 + 海边路日落</p>
+            <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-top: 16px;">
+                <span class="badge-icon">📸 手绘攻略</span>
+                <span class="badge-icon">🚲 电动车环海</span>
+                <span class="badge-icon">🌅 日落天花板</span>
+                <span class="badge-icon">🦐 海鲜不重样</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- 总览 -->
+    <div class="card">
+        <div class="card-header">
+            <span class="day-badge">📅 行程总览</span>
+            <span class="sub">3天2晚 · 海与落日</span>
+        </div>
+        <div class="card-content">
+            <div class="info-row"><span>🗓️ 5.3 广州</span><span>🥟 早茶+地标暴走</span><span>🏙️ 珠江夜景</span></div>
+            <div class="info-row"><span>🗓️ 5.4 汕尾金町湾</span><span>🏖️ 白沙滩躺平 → 二马路夜市</span><span>🌙 海鲜粥</span></div>
+            <div class="info-row"><span>🗓️ 5.5 红海湾→风车岛</span><span>🌅 日落海边路 → ✈️ 揭阳机场</span><span>🚄 高铁返程</span></div>
+        </div>
+    </div>
+
+    <!-- ================== DAY 1 广州 ================== -->
+    <div class="card">
+        <div class="card-header">
+            <span class="day-badge">🥟 DAY 1 · 5.3</span>
+            <span class="sub">广府风情 · 特种兵打卡</span>
+        </div>
+        <div class="card-content">
+            <div class="timeline-item"><div class="time-icon">☕ 08:00</div><div class="timeline-desc">📍陶陶居/点都德 — 虾饺红米肠，唤醒老广魂</div></div>
+            <div class="timeline-item"><div class="time-icon">🏛️ 10:30</div><div class="timeline-desc">沙面岛 · 欧陆建筑群 + 露德教堂，法式假日</div></div>
+            <div class="timeline-item"><div class="time-icon">⛪ 14:00</div><div class="timeline-desc">石室圣心大教堂 — 全球四大全石构哥特教堂</div></div>
+            <div class="timeline-item"><div class="time-icon">🚶 15:30</div><div class="timeline-desc">北京路千年古道 + 大佛寺，惠福东路觅食</div></div>
+            <div class="timeline-item"><div class="time-icon">🌃 18:30</div><div class="timeline-desc">花城广场→广州塔亮灯，珠江夜游（可选）</div></div>
+
+            <!-- 图片占位（便于后期插入真实图片） -->
+            <div class="img-row">
+                <div class="img-card"><div class="img-placeholder">🥟🍵</div><span>老字号早茶</span></div>
+                <div class="img-card"><div class="img-placeholder">⛪🌿</div><span>沙面&圣心</span></div>
+                <div class="img-card"><div class="img-placeholder">🗼✨</div><span>广州塔夜景</span></div>
+            </div>
+
+            <div class="food-list">
+                <div class="food-item">🍤 虾饺/凤爪</div><div class="food-item">🍜 肠粉</div>
+                <div class="food-item">🥣 双皮奶</div><div class="food-item">🐮 牛杂煲</div>
+            </div>
+            <div class="highlight-tip">🏨 住宿建议：广州东站附近 / 天河区，方便次日7:30前抵达广州东站。</div>
+        </div>
+    </div>
+
+    <!-- 交通接驳 广州→汕尾 -->
+    <div class="card">
+        <div class="card-header"><span class="day-badge">🚄 高铁接驳</span><span class="sub">5.4 清晨出发</span></div>
+        <div class="card-content">
+            <div class="info-row"><span>G8426 广州东→汕尾</span><span>08:15 → 09:47</span><span>⏱️ 1.5h ≈140元</span></div>
+            <div class="highlight-tip">💡 5.4一早高铁，抵达后车站周边租电动车（40-60元/天）开启海岸线漫游~</div>
+        </div>
+    </div>
+
+    <!-- ================== DAY 2 金町湾+二马路 ================== -->
+    <div class="card">
+        <div class="card-header"><span class="day-badge">🏖️ DAY 2 · 5.4</span><span class="sub">金町湾躺平 · 夜市烟火</span></div>
+        <div class="card-content">
+            <div class="timeline-item"><div class="time-icon">10:00</div><div class="timeline-desc">租电动车 → 骑行最美滨海公路，抵达金町湾</div></div>
+            <div class="timeline-item"><div class="time-icon">🏨 11:00</div><div class="timeline-desc">入住海景民宿（落地窗直面大海）</div></div>
+            <div class="timeline-item"><div class="time-icon">🍛 12:30</div><div class="timeline-desc">午餐：沙滩排档 海鲜粥/白灼虾</div></div>
+            <div class="timeline-item"><div class="time-icon">☀️ 14:00-17:00</div><div class="timeline-desc">金町湾白沙滩 + 风帆礼堂 — 租躺椅20元，椰青10元，彻底放空</div></div>
+            <div class="timeline-item"><div class="time-icon">🌙 18:00</div><div class="timeline-desc">骑行/打车至二马路夜市（汕尾美食宇宙）</div></div>
+            <div class="timeline-item"><div class="time-icon">🍲 19:00-21:00</div><div class="timeline-desc">菜茶+牛肉丸+薄饼+蚝仔烙+炒花蟹，人均50吃到撑</div></div>
+            <div class="img-row">
+                <div class="img-card"><div class="img-placeholder">🌊🏖️</div><span>金町湾风帆礼堂</span></div>
+                <div class="img-card"><div class="img-placeholder">🍲🦀</div><span>二马路海鲜粥</span></div>
+            </div>
+            <div class="spot-grid">
+                <div class="spot-card"><div class="spot-emoji">🏛️⛵</div><div class="spot-name">风帆礼堂</div><div class="spot-tip">日落轻婚纱风</div></div>
+                <div class="spot-card"><div class="spot-emoji">🌙🍢</div><div class="spot-name">二马路夜市</div><div class="spot-tip">菜茶+薄饼</div></div>
+                <div class="spot-card"><div class="spot-emoji">🦞🍤</div><div class="spot-name">金町湾排档</div><div class="spot-tip">海胆炒饭</div></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================== DAY 3 重头戏：红海湾+风车岛+海边路日落 ================== -->
+    <div class="card">
+        <div class="card-header"><span class="day-badge">🌅 DAY 3 · 5.5</span><span class="sub">红海湾深度游 · 日落天花板</span></div>
+        <div class="card-content">
+            <div class="timeline-item"><div class="time-icon">🌞 06:00</div><div class="timeline-desc">后澳玻璃海赶海/看日出，退潮捡贝壳花甲</div></div>
+            <div class="timeline-item"><div class="time-icon">🍳 08:30</div><div class="timeline-desc">退房，行李寄存，租的车继续环海</div></div>
+            <div class="timeline-item"><div class="time-icon">🏰 09:30</div><div class="timeline-desc">海上古堡（废弃潮汐电站）暗黑废墟风大片</div></div>
+            <div class="timeline-item"><div class="time-icon">💎 10:30</div><div class="timeline-desc">后澳玻璃海 + 遮浪奇观（南海观音）双面海奇观</div></div>
+            <div class="timeline-item"><div class="time-icon">🍽️ 12:30</div><div class="timeline-desc">午餐 红海湾海鲜排档 (清蒸杂鱼/白灼虾/炒蟹)</div></div>
+            <div class="timeline-item"><div class="time-icon">🌾 13:30</div><div class="timeline-desc">风车岛+海上公路 — 白色风车+双色海，宫崎骏画风</div></div>
+            <div class="timeline-item"><div class="time-icon">☕ 15:30</div><div class="timeline-desc">抵达海边路咖啡一条街（落日冲浪店/Dream cafe）等日落</div></div>
+            <div class="timeline-item"><div class="time-icon">🌇 17:00-18:30</div><div class="timeline-desc"><strong>🌟 海边路·汕尾日落绝杀时刻 🌟</strong> — 坐在礁石/咖啡露台，无遮挡金黄海面</div></div>
+            <div class="timeline-item"><div class="time-icon">🚖 18:40</div><div class="timeline-desc">打车前往汕尾站（约30分钟）</div></div>
+            <div class="timeline-item"><div class="time-icon">🚄 19:30-21:00</div><div class="timeline-desc">高铁前往揭阳潮汕机场（约75元，1.5h）</div></div>
+            <!-- 日落特别提示 -->
+            <div class="sunset-box">
+                🧡 <strong>汕尾日落“天花板”机位</strong> 🧡<br>
+                📍 导航「红海湾海边路/落日冲浪店」 | 最佳到达 17:00前 · 手机实况模式+广角拉低，秒变电影海报
+            </div>
+            <div class="img-row">
+                <div class="img-card"><div class="img-placeholder">🏯🌊</div><span>海上古堡</span></div>
+                <div class="img-card"><div class="img-placeholder">💨🌬️</div><span>风车岛海上公路</span></div>
+                <div class="img-card"><div class="img-placeholder">🌅☕</div><span>海边路·落日冲浪店</span></div>
+            </div>
+            <div class="food-list">
+                <div class="food-item">🦐 清灼海虾</div><div class="food-item">🦀 椒盐皮皮虾</div><div class="food-item">🍚 海鲜炒饭</div>
+                <div class="food-item">🥥 椰子冻</div><div class="food-item">🍺 日落精酿</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 景点图片扩展 & 美食插画区（便于后期塞真实照片） -->
+    <div class="card">
+        <div class="card-header"><span class="day-badge">🎞️ 视觉记忆</span><span class="sub">风景&美食•拖拽即可更换</span></div>
+        <div class="card-content">
+            <div class="img-row">
+                <div class="img-card"><div class="img-placeholder" style="background:#EEDCCD;">🏞️🖼️</div><span style="font-size:0.75rem;">后澳玻璃海</span></div>
+                <div class="img-card"><div class="img-placeholder" style="background:#EEDCCD;">🌊🌾</div><span>风车岛日落</span></div>
+                <div class="img-card"><div class="img-placeholder" style="background:#EEDCCD;">🦀🍲</div><span>二马路美食合辑</span></div>
+            </div>
+            <div class="mock-img" style="border-radius: 32px; background: #f6eadf;">
+                📷 <strong>插入真实图片小贴士</strong> ：替换 .img-placeholder 内的 emoji 为 &lt;img src="你的图片路径" style="width:100%; border-radius:24px;"&gt; 即可，保留卡片结构。
+            </div>
+        </div>
+    </div>
+
+    <!-- 实用干货 交通+预算+清单 -->
+    <div class="card">
+        <div class="card-header"><span class="day-badge">🎫 实用干货</span><span class="sub">车票·清单·TIPS</span></div>
+        <div class="card-content">
+            <div class="info-row"><span>🚄 广州东→汕尾</span><span>G8426 08:15-09:47</span><span>提前3-5天购票</span></div>
+            <div class="info-row"><span>🚄 汕尾→揭阳机场</span><span>建议 19:30车次</span><span>12306提前3天锁定</span></div>
+            <div class="info-row"><span>🛵 电动车租赁</span><span>汕尾站周边40-60元/天</span><span>可骑行全海岸线</span></div>
+            <div class="info-row"><span>💰 预算参考</span><span>人均800-1100元</span><span>不含机票/大交通</span></div>
+            <hr>
+            <div style="font-weight: 600; margin: 12px 0 8px;">✅ 看海必备清单</div>
+            <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+                <span class="badge-icon">🪪 身份证</span><span class="badge-icon">🧴 高倍防晒</span><span class="badge-icon">🕶️ 墨镜/帽子</span>
+                <span class="badge-icon">🩴 洞洞鞋/沙滩袜</span><span class="badge-icon">🔋 充电宝</span><span class="badge-icon">🦟 驱蚊液</span>
+                <span class="badge-icon">📱 防水袋</span><span class="badge-icon">🧥 薄外套</span>
+            </div>
+            <div class="highlight-tip">
+                🌊 <strong>日落时刻小贴士</strong> ：5月日落约18:30，海边路17:00抵达最佳。落日冲浪店斜坡+礁石机位绝美，带点小道具（烟花棒/仙女棒）更有氛围。
+            </div>
+        </div>
+    </div>
+
+    <!-- 美食打卡与咖啡地图 -->
+    <div class="card">
+        <div class="card-header"><span class="day-badge">🍻 美食咖啡地图</span><span class="sub">海边路必探ins风小店</span></div>
+        <div class="card-content">
+            <div class="spot-grid">
+                <div class="spot-card"><div class="spot-emoji">🌇☕</div><div class="spot-name">SUNSET落日冲浪店</div><div class="spot-tip">正对日落，网红机位</div></div>
+                <div class="spot-card"><div class="spot-emoji">🍃✨</div><div class="spot-name">浮日隱地</div><div class="spot-tip">安静 视野开阔</div></div>
+                <div class="spot-card"><div class="spot-emoji">🏖️🍹</div><div class="spot-name">M&G coffee泊暮汀</div><div class="spot-tip">临海露台+下午茶</div></div>
+            </div>
+            <div class="food-list">
+                <div class="food-item">🥣 菜茶+薄饼</div><div class="food-item">🦐 椒盐皮皮虾</div><div class="food-item">🍳 蚝仔烙</div>
+                <div class="food-item">🍧 九毛膏/草粿</div><div class="food-item">🍺 日落限定精酿</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 住宿精选 -->
+    <div class="card">
+        <div class="card-header"><span class="day-badge">🏡 住宿精选</span><span class="sub">躺看海景·方便赶路</span></div>
+        <div class="card-content">
+            <div class="info-row"><span>🏝️ 金町湾海景公寓</span><span>150-300元</span><span>日出唤醒 沙滩步行</span></div>
+            <div class="info-row"><span>🌊 海边路·君悦王子酒店</span><span>300+元</span><span>躺在床上看日落</span></div>
+            <div class="info-row"><span>🏙️ 红海湾渔家客栈</span><span>200-300元</span><span>近海鲜市场 可加工</span></div>
+            <div class="highlight-tip">✨ 5.4推荐住金町湾，5.5推荐住海边路附近（看完日落直接打车去高铁站）更从容！</div>
+        </div>
+    </div>
+
+    <!-- 最后提示 & 拍照彩蛋 -->
+    <footer>
+        🌞 手绘风攻略 · 一键修改图片自由添加 | 汕尾暮色是赠予旅人的情书<br>
+        🏖️ 电动车随停随拍，风车岛与海边路 不负每一刻蓝色与金黄
+    </footer>
+</div>
+</body>
+</html>
